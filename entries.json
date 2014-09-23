@@ -1,0 +1,29 @@
+{
+	"launchables":
+	[
+		{
+			"id": "jason",
+			"desktop.icon": "/file/icon",
+			"desktop.poster": "/file/poster",
+			"desktop.banner": "/file/banner",
+			"desktop.title": "Jason game",
+			"exec": "/home/havard/.local/share/Jason/static/Jason /home/havard/.local/share/Jason/BanjoKazooie.json"
+		},
+		{
+			"id": "steam",
+			"desktop.icon": "/file/icon",
+			"desktop.poster": "/file/poster",
+			"desktop.banner": "/file/banner",
+			"desktop.title": "Steam game",
+			"sys.exec": "steam steam://rungame/id"
+		},
+		{
+			"id": "normal",
+			"desktop.icon": "/file/icon",
+			"desktop.poster": "/file/poster",
+			"desktop.banner": "/file/banner",
+			"desktop.title": "Normal game",
+			"exec": "/usr/bin/gedit"
+		}
+	]
+}
