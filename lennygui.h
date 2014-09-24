@@ -6,6 +6,13 @@
 #include <QBrush>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
+#include <QTimer>
+#include <QDebug>
+#include <QThread>
+#include <QFile>
+#include <QPixmap>
+#include <QLabel>
+#include <QFrame>
 
 namespace Ui {
 class LennyGUI;
@@ -22,13 +29,29 @@ public:
 private slots:
     void createBackground();
     void updateBackground();
+    void canvasAddItem(QString title,QPixmap poster,QString itemId);
+    void on_actionUpdate_triggered();
+    void importEntry(QString title,QStringList imageLocations,QString itemId);
+
+    void on_zoomSlider_valueChanged(int value);
+
+signals:
+    void shutDownEverything();
 
 private:
     Ui::LennyGUI *ui;
 
-    QGraphicsScene *graphScene;
+    QString inputFile;
+    QThread *workerThread;
+    QGraphicsScene graphScene;
     QBrush *gradientBrush;
     QRadialGradient *gradientBackground;
+    QTimer *progressTimer;
+
+    //Posteritem
+    QLabel *posterLabel;
+    QGraphicsPixmapItem *posterItem;
+    QFrame *posterFrame;
 };
 
 #endif // LENNYGUI_H

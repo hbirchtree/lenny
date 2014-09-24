@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>625</width>
-    <height>297</height>
+    <width>571</width>
+    <height>335</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -47,6 +47,9 @@
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
       </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
@@ -65,13 +68,85 @@
      </widget>
     </item>
     <item>
-     <widget class="QProgressBar" name="progressBar">
+     <widget class="QProgressBar" name="loadBar">
       <property name="value">
        <number>100</number>
       </property>
       <property name="format">
        <string>Loading</string>
       </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="itemFrame">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEXT</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::MinimumExpanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>30</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QSlider" name="zoomSlider">
+         <property name="toolTip">
+          <string>Zoom</string>
+         </property>
+         <property name="minimum">
+          <number>0</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="value">
+          <number>50</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -81,8 +156,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>625</width>
-     <height>25</height>
+     <width>571</width>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -91,11 +166,23 @@
     </property>
     <addaction name="actionQuit"/>
    </widget>
+   <widget class="QMenu" name="menuLenny">
+    <property name="title">
+     <string>Lenny</string>
+    </property>
+    <addaction name="actionUpdate"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuLenny"/>
   </widget>
   <action name="actionQuit">
    <property name="text">
     <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionUpdate">
+   <property name="text">
+    <string>Update</string>
    </property>
   </action>
  </widget>

@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        lennygui.cpp
+        lennygui.cpp \
+    lennyparser.cpp
 
-HEADERS  += lennygui.h
+HEADERS  += lennygui.h \
+    lennyparser.h
 
 FORMS    += lennygui.ui
