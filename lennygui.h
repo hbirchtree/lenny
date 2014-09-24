@@ -28,6 +28,7 @@ private:
 
     QGraphicsScene *graphScene;
     QBrush *gradientBrush;
+    QRadialGradient *gradientBackground;
 };
 
 #endif // LENNYGUI_H
