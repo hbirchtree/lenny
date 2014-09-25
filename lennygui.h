@@ -35,6 +35,8 @@ private slots:
 
     void on_zoomSlider_valueChanged(int value);
 
+    void on_actionFullscreen_triggered();
+
 signals:
     void shutDownEverything();
 

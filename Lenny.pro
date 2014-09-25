@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui quickwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,3 +20,9 @@ HEADERS  += lennygui.h \
     lennyparser.h
 
 FORMS    += lennygui.ui
+
+OTHER_FILES += \
+    lenny-canvas.qml
+
+RESOURCES += \
+    resources.qrc
