@@ -19,10 +19,11 @@ LennyGUI::LennyGUI(QWidget *parent) :
 //    connect(this,SIGNAL(shutDownEverything()),workerThread,SLOT(quit()));
 //    testParser.insertStartOpts("testfile.json");
     QStringList imageList;
+    imageList.append("Final Feels X.png");
+    importEntry("test",imageList,"test");
     imageList.append("Avatar.png");
-    imageList.append("Random - 25.jpg");
     importEntry("test",imageList,"test");
-    importEntry("test",imageList,"test");
+    imageList.clear();
 //    workerThread->start();
 }
 
@@ -44,13 +45,13 @@ void LennyGUI::updateBackground(){
     gradientBackground->setColorAt(0,QColor::fromRgbF(0.3,0.3,0.3,0.1)); //Definitely want to make this background customizable.
     QBrush *gradientBrush = new QBrush(*gradientBackground);
     graphScene.setBackgroundBrush(*gradientBrush);
+    ui->lennyCanvas->resize(graphScene.itemsBoundingRect().width(),graphScene.itemsBoundingRect().width());
 
     QTimer *progressTimer = new QTimer(this);
     connect(progressTimer,SIGNAL(timeout()),ui->loadBar,SLOT(hide()));
     connect(progressTimer,SIGNAL(timeout()),progressTimer,SLOT(stop()));
     ui->loadBar->show();
-    progressTimer->start(3000);
-    graphScene.setSceneRect(ui->lennyCanvas->sceneRect());
+    progressTimer->start(500);
 }
 
 void LennyGUI::canvasAddItem(QString title, QPixmap poster, QString itemId){
@@ -85,7 +86,7 @@ void LennyGUI::on_zoomSlider_valueChanged(int value)
     for(int i=0;i<graphScene.items().count();i++){
         QGraphicsItem *curr = graphScene.items().at(i);
         curr->setScale(itemScale);
-        curr->setPos(i+3,3);
+        curr->setPos(i*300,3);
     }
     ui->label->setText(QString::number(itemScale));
     graphScene.setSceneRect(ui->lennyCanvas->sceneRect());
