@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
 Rectangle {
+    id: display
+    anchors.fill: parent
     width: 800
     height: 600
     antialiasing: true

@@ -8,23 +8,20 @@ LennyGUI::LennyGUI(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->centralWidget->setStyleSheet("background-color:black;");
-//    createBackground();
     ui->loadBar->setMaximum(0);
     ui->loadBar->setFormat(tr("Running"));
     ui->loadBar->hide();
-//    LennyParser testParser;
-//    QThread *workerThread = new QThread(this);
-//    testParser.moveToThread(workerThread);
-//    connect(workerThread,SIGNAL(started()),&testParser,SLOT(parseFile()));
-//    connect(this,SIGNAL(shutDownEverything()),workerThread,SLOT(quit()));
-//    testParser.insertStartOpts("testfile.json");
     QStringList imageList;
     imageList.append("Final Feels X.png");
     importEntry("test",imageList,"test");
     imageList.append("Avatar.png");
     importEntry("test",imageList,"test");
     imageList.clear();
-//    workerThread->start();
+    createQmlRoot();
+}
+
+void LennyGUI::createQmlRoot(){
+
 }
 
 LennyGUI::~LennyGUI()
@@ -33,40 +30,24 @@ LennyGUI::~LennyGUI()
     delete ui;
 }
 
-void LennyGUI::createBackground(){
-//    updateBackground();
-//    ui->lennyCanvas->setScene(&graphScene);
-}
-
-void LennyGUI::updateBackground(){
-    //This is the fun-function, although quite expensive. Only decent way of updating the background gradient so far without making it too big for smaller windows or too small for big windows.
-//    QRadialGradient *gradientBackground = new QRadialGradient(0.5,1,ui->lennyCanvas->width()*ui->lennyCanvas->height()/3.8);
-//    gradientBackground->setColorAt(1,QColor::fromRgb(0,0,0));
-//    gradientBackground->setColorAt(0,QColor::fromRgbF(0.3,0.3,0.3,0.1)); //Definitely want to make this background customizable.
-//    QBrush *gradientBrush = new QBrush(*gradientBackground);
-//    graphScene.setBackgroundBrush(*gradientBrush);
-//    ui->lennyCanvas->resize(graphScene.itemsBoundingRect().width(),graphScene.itemsBoundingRect().width());
-
-    QTimer *progressTimer = new QTimer(this);
-    connect(progressTimer,SIGNAL(timeout()),ui->loadBar,SLOT(hide()));
-    connect(progressTimer,SIGNAL(timeout()),progressTimer,SLOT(stop()));
-    ui->loadBar->show();
-    progressTimer->start(500);
-}
-
-void LennyGUI::canvasAddItem(QString title, QPixmap poster, QString itemId){
-    QLabel *posterLabel = new QLabel;
-    QFrame *posterFrame = new QFrame;
-    QGraphicsPixmapItem *posterItem = new QGraphicsPixmapItem;
-    posterItem->setPixmap(poster);
-    qreal itemScale = (50.0+ui->zoomSlider->value())/100.0;
-    posterItem->setScale(itemScale);
-//    graphScene.addItem(posterItem);
-}
-
-void LennyGUI::on_actionUpdate_triggered()
-{
-    updateBackground();
+void LennyGUI::importObjects(){
+    LennyParser testParser;
+    QThread *workerThread = new QThread;
+    testParser.moveToThread(workerThread);
+    testParser.inputFile = "entries.json";
+    connect(workerThread,SIGNAL(started()),&testParser,SLOT(parseFile()),Qt::QueuedConnection);
+    connect(this,SIGNAL(shutDownEverything()),workerThread,SLOT(quit()),Qt::QueuedConnection);
+    QEventLoop workWaiter;
+    connect(workerThread,SIGNAL(finished()),&workWaiter,SLOT(quit()));
+    connect(&testParser,SIGNAL(finishedProcessing()),&workWaiter,SLOT(quit()),Qt::QueuedConnection);
+    ui->loadBar->setVisible(true);
+    ui->loadBar->setMaximum(0);
+    workerThread->start();
+    workWaiter.exec();
+    ui->loadBar->setMaximum(100);
+    ui->loadBar->setValue(100);
+    ui->loadBar->setVisible(false);
+    qDebug() << "end";
 }
 
 void LennyGUI::importEntry(QString title, QStringList imageLocations, QString itemId){
@@ -76,7 +57,6 @@ void LennyGUI::importEntry(QString title, QStringList imageLocations, QString it
             imageFile.setFileName(file);
     if(!imageFile.open(QIODevice::ReadOnly))
         return;
-    canvasAddItem(title,QPixmap::fromImage(QImage::fromData(imageFile.readAll())),itemId);
 }
 
 void LennyGUI::on_zoomSlider_valueChanged(int value)
@@ -99,4 +79,9 @@ void LennyGUI::on_actionFullscreen_triggered()
         showFullScreen();
     }else
         showNormal();
+}
+
+void LennyGUI::on_actionImport_objects_triggered()
+{
+    importObjects();
 }
