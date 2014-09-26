@@ -6,10 +6,11 @@ Rectangle {
     anchors.fill: parent
     width: 800
     height: 600
-    antialiasing: true
+    signal itemSelected(string id)
     border.width: 0
     color: "#000000"
     RadialGradient {
+        id:background
         anchors.fill: parent
         cached: true
         gradient: Gradient {
@@ -20,7 +21,14 @@ Rectangle {
         verticalRadius: parent.height*2
         horizontalRadius: parent.width*(3/2)
     }
+    Rectangle {id:testRect;width:100*itemscale_;height:100*itemscale_;color:"#450045";x:20;y:20;}
     GridView {
-
+        id: grid
+        anchors.fill: parent
+        model: items_
+        delegate: Column {
+            Image {source: icon;anchors.horizontalCenter: parent.horizontalCenter}
+            Text {text: title;anchors.horizontalCenter: parent.horizontalCenter}
+        }
     }
 }

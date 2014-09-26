@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QThread>
 #include <QFile>
+#include <QFileDialog>
 #include <QPixmap>
 #include <QLabel>
 #include <QFrame>
@@ -14,6 +15,11 @@
 
 #include <QQmlComponent>
 #include <QQmlProperty>
+#include <QQuickItem>
+#include <QQmlEngine>
+#include <QQmlContext>
+
+#include <QStandardItemModel>
 
 namespace Ui {
 class LennyGUI;
@@ -27,24 +33,38 @@ public:
     explicit LennyGUI(QWidget *parent = 0);
     ~LennyGUI();
 
+    QStandardItemModel itemGridModel;
+
 private slots:
-    void importEntry(QString title,QStringList imageLocations,QString itemId);
     void on_zoomSlider_valueChanged(int value);
     void on_actionFullscreen_triggered();
-    void importObjects();
+    void importObjects(QHash<QString,QVariant> importedHash);
 
+    void execLennyParser();
     void createQmlRoot();
 
     void on_actionImport_objects_triggered();
+public slots:
+    void executeItem(QString itemId);
 
 signals:
     void shutDownEverything();
+
+    void scaleChanged();
 
 private:
     Ui::LennyGUI *ui;
     QString inputFile;
     QThread *workerThread;
     QTimer *progressTimer;
+
+    QStandardItem *stdItem;
+
+    QQmlComponent *initComponent;
+    QHash<QString,QVariant> currentItems;
+
+    void initItemModel();
+    void addToItemModel(QHash<QString,QVariant> importedHash);
 
     //QML-related
 

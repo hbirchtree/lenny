@@ -8,6 +8,7 @@
 #include <QJsonObject>
 #include <QDebug>
 #include <QTimer>
+#include <QFile>
 
 class LennyParser : public QObject
 {
@@ -15,10 +16,11 @@ class LennyParser : public QObject
 public:
     explicit LennyParser(QObject *parent = 0);
     QString inputFile;
+    QHash<QString,QVariant> examineLaunchables(QJsonArray inputArray);
 
 signals:
-    void exportEntry(QString,QStringList,QString);
-    void finishedProcessing();
+    void exportObjects(QHash<QString,QVariant>);
+    void finishedProcessing(); //Returned even if it fails
 
 public slots:
     void parseFile();
