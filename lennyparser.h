@@ -20,6 +20,7 @@ public:
 
 signals:
     void exportObjects(QHash<QString,QVariant>);
+    void exportOptions(QJsonObject);
     void finishedProcessing(); //Returned even if it fails
 
 public slots:

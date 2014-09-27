@@ -20,9 +20,6 @@
    <string notr="true">Lenny</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>0</number>
@@ -40,7 +37,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QQuickWidget" name="quickWidget">
+     <widget class="QQuickWidget" name="quickWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -73,6 +70,9 @@
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
       </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
         <number>0</number>
@@ -98,7 +98,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEXT</string>
+          <string>                                              </string>
          </property>
         </widget>
        </item>
@@ -118,7 +118,7 @@
        <item>
         <widget class="QSlider" name="zoomSlider">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -127,16 +127,16 @@
           <string>Zoom</string>
          </property>
          <property name="minimum">
-          <number>0</number>
+          <number>80</number>
          </property>
          <property name="maximum">
-          <number>100</number>
+          <number>400</number>
          </property>
          <property name="singleStep">
           <number>10</number>
          </property>
          <property name="value">
-          <number>50</number>
+          <number>80</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -154,22 +154,22 @@
      <x>0</x>
      <y>0</y>
      <width>571</width>
-     <height>28</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionImport_objects"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuLenny">
     <property name="title">
      <string>&amp;Lenny</string>
     </property>
-    <addaction name="actionUpdate"/>
     <addaction name="actionFullscreen"/>
-    <addaction name="actionImport_objects"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuLenny"/>
@@ -191,7 +191,12 @@
   </action>
   <action name="actionImport_objects">
    <property name="text">
-    <string>Import objects</string>
+    <string>&amp;Open file</string>
+   </property>
+  </action>
+  <action name="actionInitialize_QML">
+   <property name="text">
+    <string>Initialize QML</string>
    </property>
   </action>
  </widget>

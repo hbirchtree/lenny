@@ -9,16 +9,21 @@ void LennyParser::parseFile(){
     QJsonDocument toProcess = openFile(inputFile);
     QJsonObject rootObject = toProcess.object();
     QHash<QString,QVariant> launchables;
+    QJsonObject options;
     foreach(QString key, rootObject.keys()){
         if(key=="launchables"){
             launchables = examineLaunchables(rootObject.value(key).toArray());
         }
+        if(key=="lenny-opts")
+            options=rootObject.value(key).toObject();
     }
     if(!launchables.isEmpty()){
         emit exportObjects(launchables);
     }else{
-        printf("ERROR: No launchable objects were found.\n");
+        printf("WARN: No launchable objects were found.\n");
     }
+    if(!options.isEmpty())
+        emit exportOptions(options);
 
     emit finishedProcessing();
 }
